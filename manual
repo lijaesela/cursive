@@ -1,0 +1,89 @@
+Cursive is an ncurses file manager/browser loosely inspired by Ranger.
+It uses vim keys by default, and will feel very similar to Ranger or lf.
+
+THINGS THAT CURRENTLY WORK RELIABLY:	(keys are case sensitive)
+
+> j and k to move down and up through files
+> J and K to do this 10 at a time
+> l to open files or to descend into selected directory
+> h to go up one directory
+
+> z to toggle hidden files
+> n to toggle numbers next to files
+
+> D to delete any file (that is not a directory)
+> m to mkdir
+> r to rename
+> a to append rename to original file name
+> o to open file with specific app
+
+> $ to run a system command
+> s to open an interactive shell
+
+IN DEVELOPMENT:
+
+> space to select files for various actions
+> u to acces shell macros defined in a file
+> epic abstraction in the drawing code for ranger-esque directory previews
+> MAKE A NEW DRAW LOOP
+
+IN THE FUTURE:
+
+> the ability to delete directories
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+QUESTIONS THAT HAVE NEVER BEEN ASKED:
+
+Q: Is there an option for colors?
+A: pipe it into lolcat lmao fuck you

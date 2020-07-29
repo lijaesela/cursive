@@ -1,0 +1,3 @@
+- move "case MYTEST" into the draw loop for a proper way to see selected files
+
+- don't bother with previews yet, make a usable version one of the program and test it extensively
