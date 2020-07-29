@@ -157,12 +157,12 @@ int mydraw(int d_w)
 	int ii;
 	int i2;
 	clear();
-	move((maxrow/2)-myline,0);
 	if ( dirnum < 0 )
 	{
 		printw("[empty]");
 		return 0;
 	}
+	move((maxrow/2)-myline,0);
 	while ( i != (dirnum + 1) )
 	{
 		// get the stats for the current file in the loop
@@ -180,7 +180,8 @@ int mydraw(int d_w)
 		// don't print unless within terminal bounds
 		if ( (myline-(maxrow/2)) <= (i) && (i-myline) <= (maxrow/2) )
 		{
-			if ( yournumbers == true ) {
+			if ( yournumbers == true )
+			{
 				attron(NUMBERTHEME);
 				printw("%d", i);
 				attroff(NUMBERTHEME);
@@ -188,6 +189,10 @@ int mydraw(int d_w)
 			attron(SPACETHEME);
 			printw("%s", youritemspace);
 			attroff(SPACETHEME);
+			if ( yournumbers == false )
+			{
+				printw(" ");
+			}
 			ii = 0;
 			while ( ii < (d_w-calcdigits(i)-strlen(youritemspace)) && ii < strlen(dirdir[i]) )
 			{
@@ -203,9 +208,12 @@ int mydraw(int d_w)
 	attron(CURSORTHEME);mvprintw((maxrow/2),0,yourchar);attroff(CURSORTHEME);
 
 	// no numbers on cursor line
-	move((maxrow/2),strlen(yourchar));
-	for ( i2=0; i2 < calcdigits(myline); i2++ )
-		printw(" ");
+	if ( yournumbers == true )
+	{
+		move((maxrow/2),strlen(yourchar));
+		for ( i2=0; i2 < calcdigits(myline); i2++ )
+			printw(" ");
+	}
 
 	// show a number of files in the corner.
 	mvprintw(maxrow,maxcol-calcdigits((dirnum+1)),"%d", (dirnum+1));
