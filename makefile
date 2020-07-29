@@ -1,19 +1,13 @@
 make: cursive.c config.h
 	gcc -o cursive cursive.c `pkg-config --cflags --libs ncurses`
-clean: cursive
-	rm cursive
-install: cursive
-	cp -r cursive /bin/cursive
-	chmod 755 /bin/cursive
-uninstall:
-	rm -f /bin/cursive
 
 # the following commands are for my personal use, so ignore them.
+
 ZIPDIR = /home/lija/sd
 run: cursive.c config.h
 	gcc -o cursive cursive.c `pkg-config --cflags --libs ncurses`
 	./cursive
-zip: cursive.c config.h README.txt manual
+zip:
 	tar -czf $(ZIPDIR)/cursive.tgz .
 
 

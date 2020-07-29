@@ -1,3 +1,10 @@
+/* 
+ * This code was for directory previews.
+ * It had too many problems, so I removed it.
+ * I worked too hard on it to part with it though,
+ * so here it is.
+ */
+
 // second set of directory info vars for previews
 bool pvupdate = true;
 char pvdir[4096][128];

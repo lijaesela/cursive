@@ -275,7 +275,7 @@ int main( int argc, char *argv[] )
 
 		// new seperate draw loop
 		// beginning of the DRAW ZONE
-		mydraw((maxcol/2));
+		mydraw(maxcol);
 
 		// wait for input
 		// the only code after this line should be input related

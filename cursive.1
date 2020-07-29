@@ -1,0 +1,48 @@
+.TH cursive 1 2020-07-29 GNU
+
+.SH NAME
+cursive - minimal file browser
+.SH SYNOPSIS
+cursive [directory]
+.SH DESCRIPTION
+cursive is a tiny terminal file browser.  Its capabilities, using the default keybindings, are as follows.
+.TP
+.B h,j,k,l:
+Movement keys.  'j' and 'k' move through the files in the CWD, and 'h' will ascend one directory.  'l' will descend if a directory is selected.  If a file is selected, 'l' will instead open that file.
+.TP
+.B J,K:
+Page down and up through CWD.
+.TP
+.B o:
+Opens a prompt to open selected file in a specific program.
+.TP
+.B m:
+Prompts to make directory with given title.
+.TP
+.B r:
+Prompts to rename selected file.
+.TP
+.B a:
+Prompts to append given text to the selected file name.
+.TP
+.B z:
+Toggle hidden files.
+.TP
+.B D:
+Prompt to delete selected file.
+.TP
+.B $:
+Prompt to run a given shell command.
+.TP
+.B n:
+Toggle line numbers.
+.TP
+.B q:
+Exit.
+.TP
+.B s:
+Run an interactive shell.
+
+
+.SH AUTHOR
+Lija <janponalukasu@tutanota.com>
