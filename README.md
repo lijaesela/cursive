@@ -16,3 +16,6 @@ make
 ```shell
 ./cursive
 ```  
+### Configuration
+Configuration is compiled into the program via ``config.h``.
+There are options for keybindings, a few basic behavioral options, and some theming options.  
