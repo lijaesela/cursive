@@ -125,16 +125,12 @@ const char * myprompt(const char *ps1, int length)
 	// return the input
 	return str;
 }
-int mychangedir(const char *relativedir)
+int mydescend(const char *relativedir)
 {
 	char cwd[1024];
 	getcwd(cwd, sizeof(cwd));
 	chdir(strcat(strcat(cwd, "/"), relativedir));
 	return 0;
-}
-void mymv(void)
-{
-	return;
 }
 int myselectfile(const char *myfile)
 {
@@ -314,6 +310,20 @@ int main( int argc, char *argv[] )
 		else if (myline > dirnum)
 			myline = dirnum;
 
+		// set environment variables for scripting
+		setenv("f", dirdir[myline], 1);
+		if ( cutnumber == 0 ) {
+			setenv("fx", dirdir[myline], 1);
+		} else {
+			memset(movecmdbuffer,0,sizeof(movecmdbuffer));
+			for ( i=0; i<cutnumber; i++ )
+			{
+				strcat(movecmdbuffer, cutbuffer[i]);
+				strcat(movecmdbuffer, yourfs);
+			}
+			setenv("fx", movecmdbuffer, 1);
+		}
+
 		// draw the UI
 		mydraw(maxcol);
 
@@ -346,7 +356,7 @@ int main( int argc, char *argv[] )
 				{
 					// cd if direcrory
 					case S_IFDIR:
-						mychangedir(dirdir[myline]);
+						mydescend(dirdir[myline]);
 						if ( yourzero == true )
 							myline = 0;
 						break;

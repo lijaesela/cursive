@@ -15,6 +15,9 @@ bool yourhidden = true;
 // print numbers at startup
 bool yournumbers = true;
 
+// field separator for "$fx", an environment variable for selected files
+const char *yourfs = " ";
+
 /* vim keys */
 
 // moving
