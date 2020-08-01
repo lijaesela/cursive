@@ -132,6 +132,21 @@ int mydescend(const char *relativedir)
 	chdir(strcat(strcat(cwd, "/"), relativedir));
 	return 0;
 }
+void writetmp(void)
+{
+	// fp for writing /tmp file
+	FILE *fp;
+
+	// get cwd
+	char cwd[1024];
+	getcwd(cwd, sizeof(cwd));
+
+	// write CWD to /tmp file for CD script
+	fp = fopen("/tmp/cursive_cd", "w+");
+	fprintf(fp, "%s", cwd);
+
+	return;
+}
 int myselectfile(const char *myfile)
 {
 	// get cwd
@@ -595,6 +610,10 @@ int main( int argc, char *argv[] )
 
 			// quitting
 			case QUIT:
+				// call writetmp in case a cd needs to be done
+				writetmp();
+
+				// end ncurses and return main
 				endwin();
 				return 0;
 		}
