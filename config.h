@@ -21,6 +21,7 @@ bool yournumbers = true;
 #define	PGUP		'K'
 #define	OPEN		'l'
 #define	BACK		'h'
+
 // actions
 #define	OPENWITH	'o'
 #define	MKDIR		'm'
@@ -33,9 +34,7 @@ bool yournumbers = true;
 #define	TOGGLENUMBER	'n'
 #define	QUIT		'q'
 #define	EXECSHELL	's'
-// WIP actions
 #define	SELECT		' '
-#define	MYTEST		't'
 
 /* theme */
 

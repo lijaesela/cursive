@@ -323,20 +323,20 @@ int main( int argc, char *argv[] )
 		// actions
 		switch (ch)
 		{
+			// movement
 			case DOWN:
 				myline++;
 				break;
 			case UP:
 				myline--;
 				break;
-			// same as down, but more epic
 			case PGDOWN:
 				myline = myline+(maxrow/2);
 				break;
-			// same as up, but more epic
 			case PGUP:
 				myline = myline-(maxrow/2);
 				break;
+
 			// open file / cd to directory, ranger style
 			case OPEN:
 				// get stats for selected file
@@ -356,6 +356,7 @@ int main( int argc, char *argv[] )
 				}
 				dirupdate = true;
 				break;
+
 			// go up a directory
 			case BACK:
 				chdir("./..");
@@ -364,6 +365,7 @@ int main( int argc, char *argv[] )
 					myline = 0;
 				dirupdate = true;
 				break;
+
 			// make a directory with default GNU permissions
 			case MKDIR:
 				// put string returned from prompt in a buffer
@@ -372,6 +374,7 @@ int main( int argc, char *argv[] )
 				mkdir(promptbuffer, 0777);
 				dirupdate = true;
 				break;
+
 			// rename file at cursor
 			case RENAME:
 				// put string returned from prompt in a buffer
@@ -380,6 +383,7 @@ int main( int argc, char *argv[] )
 				rename(dirdir[myline], promptbuffer);
 				dirupdate = true;
 				break;
+
 			// rename but append given text to existing filename
 			case APPEND:
 				// add the filename to a buffer
@@ -390,6 +394,7 @@ int main( int argc, char *argv[] )
 				rename(dirdir[myline], promptbuffer);
 				dirupdate = true;
 				break;
+
 			// deleting things
 			case DEL:
 				// check if there is a selection
@@ -443,10 +448,12 @@ int main( int argc, char *argv[] )
 				}
 				dirupdate = true;
 				break;
+
 			// select files for batch actions
 			case SELECT:
 				myselectfile(dirdir[myline]);
 				break;
+
 			// prompt for what program to use to open a file
 			case OPENWITH:
 				sprintf(promptbuffer, "%s %s",
@@ -460,6 +467,7 @@ int main( int argc, char *argv[] )
 
 				dirupdate = true;
 				break;
+
 			// show/hide hidden files
 			case TOGGLEHIDE:
 				yourhidden = !yourhidden;
@@ -468,10 +476,9 @@ int main( int argc, char *argv[] )
 			case TOGGLENUMBER:
 				yournumbers = !yournumbers;
 				break;
+
 			// run a single shell command
 			case SHELLCMD:
-// copy input to a buffer rather than passing it directly into "system()"
-// this way, "myprompt()" doesn't run outside of ncurses mode, causing strange behavior
 				strcpy(promptbuffer,myprompt("$ ",2));
 
 				// end ncurses and run
@@ -481,6 +488,7 @@ int main( int argc, char *argv[] )
 
 				dirupdate = true;
 				break;
+
 			// start interactive shell
 			case EXECSHELL:
 				endwin();
@@ -488,21 +496,18 @@ int main( int argc, char *argv[] )
 				myinit();
 				dirupdate = true;
 				break;
+
 			// open file in $EDITOR
 			case EDIT:
 				myopenwith(getenv("EDITOR"), dirdir[myline]);
 				dirupdate = true;
 				break;
-			// testing to see if selections are reliable
-			case MYTEST:
-				for ( i=0; i<cutnumber; i++ )
-					mvprintw(i,0,"%s\n",cutbuffer[i]);
-				mvprintw(0,maxcol-8,"%d",cutnumber);
-				getch();
+
 			// handle window resize
 			case KEY_RESIZE:
 				getmaxyx(stdscr,maxrow,maxcol); maxrow--; maxcol--;
 				break;
+
 			// quitting
 			case QUIT:
 				endwin();
