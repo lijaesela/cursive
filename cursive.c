@@ -310,17 +310,27 @@ int main( int argc, char *argv[] )
 		else if (myline > dirnum)
 			myline = dirnum;
 
-		// set environment variables for scripting
+		/* set environment variables for scripting */
+
+		// "$f", the environment variable for the file at the cursor
 		setenv("f", dirdir[myline], 1);
+
+		// "$fx", the environment variable for selected files
 		if ( cutnumber == 0 ) {
+			// "$fx" will act as "$f" if there is no selection
 			setenv("fx", dirdir[myline], 1);
 		} else {
+			// use "movecmdbuffer" to save space
+			// clear the string
 			memset(movecmdbuffer,0,sizeof(movecmdbuffer));
+
+			// concatenate the absolute file paths
 			for ( i=0; i<cutnumber; i++ )
 			{
 				strcat(movecmdbuffer, cutbuffer[i]);
 				strcat(movecmdbuffer, yourfs);
 			}
+			// set the environment variable to the finished string
 			setenv("fx", movecmdbuffer, 1);
 		}
 
@@ -464,11 +474,25 @@ int main( int argc, char *argv[] )
 					myline++;
 				break;
 
+			// clear selected files
+			case CLEAR:
+				cutnumber = 0;
+				break;
+
 			// prompt for what program to use to open a file
 			case OPENWITH:
-				sprintf(promptbuffer, "%s %s",
-				myprompt("open with: ",11),
-				dirdir[myline]);
+				if ( cutnumber == 0 ) {
+					sprintf(promptbuffer, "%s %s",
+					myprompt("open with: ",11),
+					dirdir[myline]);
+				} else {
+					// open multiple files if selected
+					sprintf(promptbuffer, "%s %s",
+					myprompt("open with: ",11),
+					getenv("fx"));
+
+					cutnumber = 0;
+				}
 
 				// end ncurses and run
 				endwin();

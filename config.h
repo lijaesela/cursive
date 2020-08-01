@@ -4,7 +4,7 @@
 const bool yourmoveselect = true;
 
 // go to the first item upon entering a directory
-const bool yourzero = false;
+const bool yourzero = true;
 
 // file opener
 const char *youropener = "xdg-open";
@@ -42,6 +42,7 @@ const char *yourfs = " ";
 #define	TOGGLENUMBER	'n'
 #define	TOGGLEHIDE	'z'
 #define	QUIT		'q'
+#define CLEAR		'c'
 
 /* theme */
 
