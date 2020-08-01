@@ -263,10 +263,29 @@ int mydraw(int d_w)
 			printw(" ");
 	}
 
-	// show a number of files and CWD in the bottom right corner
-	mvprintw(maxrow-1,maxcol-calcdigits(dirnum)-calcdigits(myline),
-	"%d/%d", myline, dirnum);
-	mvprintw(maxrow,maxcol-strlen(cwd)+1,"%s", cwd);
+	/* info on the right of the window */
+
+	// putting things on the right side of the screen is a hassle
+	// much calculation is needed to know where to start printing
+	
+	// stop displaying if list of selected files is too long
+	if ( cutnumber < maxrow-3 )
+	{
+		// separator
+		mvprintw(maxrow-4,maxcol-strlen(yoursep),"%s", yoursep);
+	
+		// "user@host"
+		mvprintw(maxrow-3,maxcol-11,"%s@%s", "place", "holder");
+		
+		// separator
+		mvprintw(maxrow-2,maxcol-strlen(yoursep),"%s", yoursep);
+		
+		// show a number of files and CWD in the bottom right corner
+		mvprintw(maxrow-1,maxcol-calcdigits(dirnum)-calcdigits(myline)+1-3,
+		"[%d/%d]", myline, dirnum);
+		mvprintw(maxrow,maxcol-strlen(cwd)+1,
+		"%s", cwd);
+	}
 
 	// draw selected files starting from the top right of the window
 	if ( cutnumber > 0 )

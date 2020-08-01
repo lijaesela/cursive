@@ -59,3 +59,6 @@ const char *yourchar = ">";
 // printed before all files, can be more than one character
 // although it should probably be as long as "yourchar"
 const char *youritemspace = " ";
+
+// separator for information on the right of the window
+const char *yoursep = "~~~~~~~~";
