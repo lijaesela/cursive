@@ -39,10 +39,6 @@ struct stat sb;
 
 /* functions */
 
-void mymove(int steps)
-{
-	myline = myline + steps;
-}
 int calcdigits(int number)
 {
 	// I copied this function from a forum lmao but it basically returns the number of digits of a base 10 number
@@ -377,10 +373,7 @@ int main( int argc, char *argv[] )
 
 			// rename file at cursor
 			case RENAME:
-				// put string returned from prompt in a buffer
-				strcpy(promptbuffer, myprompt("rename: ", 8));
-				// change filename to string in buffer
-				rename(dirdir[myline], promptbuffer);
+				rename(dirdir[myline], myprompt("rename: ", 8));
 				dirupdate = true;
 				break;
 
