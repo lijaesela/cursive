@@ -8,15 +8,24 @@ cursive [directory]
 cursive is a tiny terminal file browser.  Its capabilities, using the default keybindings, are as follows.
 .TP
 .B h,j,k,l:
-Movement keys.  'j' and 'k' move through the files in the CWD, and 'h' will ascend one directory.  'l' will descend if a directory is selected.  If a file is selected, 'l' will instead open that file.
+Movement keys.  'j' and 'k' move through the files in the CWD, and 'h' will ascend one directory.  'l' will descend if a directory is at the cursor.  If there is a file, 'l' will instead open that file.
 .TP
 .B J,K:
 Page down and up through CWD.
 .TP
+.B <space>:
+Select files for various batch actions.
+.TP
 .B o:
 Opens a prompt to open selected file in a specific program.
 .TP
+.B e:
+Opens file at cursor in $EDITOR
+.TP
 .B m:
+Moves any selected files into CWD.
+.TP
+.B M:
 Prompts to make directory with given title.
 .TP
 .B r:
@@ -29,7 +38,7 @@ Prompts to append given text to the selected file name.
 Toggle hidden files.
 .TP
 .B D:
-Prompt to delete selected file.
+Prompt to delete selected files, or file at cursor.
 .TP
 .B $:
 Prompt to run a given shell command.
