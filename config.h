@@ -27,6 +27,7 @@ bool yournumbers = true;
 // actions
 #define	OPENWITH	'o'
 #define	MKDIR		'm'
+#define EDIT		'e'
 #define	RENAME		'r'
 #define	APPEND		'a'
 #define	TOGGLEHIDE	'z'
