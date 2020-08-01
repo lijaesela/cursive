@@ -479,7 +479,7 @@ int main( int argc, char *argv[] )
 				cutnumber = 0;
 				break;
 
-			// prompt for what program to use to open a file
+			// prompt for what program to use to open file(s)
 			case OPENWITH:
 				if ( cutnumber == 0 ) {
 					sprintf(promptbuffer, "%s %s",
@@ -531,14 +531,25 @@ int main( int argc, char *argv[] )
 				dirupdate = true;
 				break;
 
-			// open file in $EDITOR
+			// open file(s) in $EDITOR
 			case EDIT:
-				myopenwith(getenv("EDITOR"), dirdir[myline]);
+				if ( cutnumber == 0 )
+					myopenwith(getenv("EDITOR"), dirdir[myline]);
+				else
+					myopenwith(getenv("EDITOR"), getenv("fx"));
 				dirupdate = true;
 				break;
 
 			// move files by passing an mv command to the system
 			case MOVE:
+				// break if no files are selected
+				if ( cutnumber == 0 )
+				{
+					myconfirm("no files selected (any key)");
+					break;
+				}
+
+				// concatenate selected file(s) into a buffer
 				strcpy(movecmdbuffer, "mv ");
 				for ( i=0; i<cutnumber; i++ )
 				{
