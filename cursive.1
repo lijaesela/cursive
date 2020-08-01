@@ -17,28 +17,28 @@ Page down and up through CWD.
 Select files for various batch actions.
 .TP
 .B o:
-Opens a prompt to open selected file in a specific program.
+Opens a prompt to open file at cursor or selected file(s) in a specific program.
 .TP
 .B e:
-Opens file at cursor in $EDITOR
+Opens file at cursor or selected file(s) in $EDITOR
 .TP
 .B m:
-Moves any selected files into CWD.
+Moves any selected file(s) into CWD.
 .TP
 .B M:
 Prompts to make directory with given title.
 .TP
 .B r:
-Prompts to rename selected file.
+Prompts to rename file at cursor.
 .TP
 .B a:
-Prompts to append given text to the selected file name.
+Prompts to append given text to the filename at cursor.
 .TP
 .B z:
 Toggle hidden files.
 .TP
 .B D:
-Prompt to delete selected files, or file at cursor.
+Prompt to delete selected file(s), or file at cursor.
 .TP
 .B $:
 Prompt to run a given shell command.
@@ -51,6 +51,9 @@ Exit.
 .TP
 .B s:
 Run an interactive shell.
+.TP
+.B c:
+Clear file selection.
 
 
 .SH AUTHOR
