@@ -445,6 +445,8 @@ int main( int argc, char *argv[] )
 			// select files for batch actions
 			case SELECT:
 				myselectfile(dirdir[myline]);
+				if ( yourmoveselect == true )
+					myline++;
 				break;
 
 			// prompt for what program to use to open a file

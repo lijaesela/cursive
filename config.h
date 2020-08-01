@@ -1,5 +1,8 @@
 /* functional stuff */
 
+// move down after selecting a file
+const bool yourmoveselect = true;
+
 // go to the first item upon entering a directory
 const bool yourzero = false;
 
