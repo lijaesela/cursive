@@ -180,6 +180,10 @@ int mydraw(int d_w)
 	 * It looks really cool, alright?
 	 */
 
+	// get CWD (I should consolidate all of these into one function huh)
+	char cwd[1024];
+	getcwd(cwd, sizeof(cwd));
+
 	// multiple increments for epicly nested loops
 	int i;
 	int ii;
@@ -259,8 +263,10 @@ int mydraw(int d_w)
 			printw(" ");
 	}
 
-	// show a number of files in the bottom right corner
-	mvprintw(maxrow,maxcol-calcdigits((dirnum+1)),"%d", (dirnum+1));
+	// show a number of files and CWD in the bottom right corner
+	mvprintw(maxrow-1,maxcol-calcdigits(dirnum)-calcdigits(myline),
+	"%d/%d", myline, dirnum);
+	mvprintw(maxrow,maxcol-strlen(cwd)+1,"%s", cwd);
 
 	// draw selected files starting from the top right of the window
 	if ( cutnumber > 0 )
@@ -334,7 +340,7 @@ int main( int argc, char *argv[] )
 			setenv("fx", movecmdbuffer, 1);
 		}
 
-		// draw the UI
+		// draw the UI, stopping at the edge of the window
 		mydraw(maxcol);
 
 		// wait for input
