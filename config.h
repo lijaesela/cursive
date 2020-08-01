@@ -26,18 +26,19 @@ bool yournumbers = true;
 #define	BACK		'h'
 
 // actions
-#define	OPENWITH	'o'
-#define	MKDIR		'm'
-#define EDIT		'e'
+#define	SELECT		' '
+#define	DEL		'D'
 #define	RENAME		'r'
 #define	APPEND		'a'
-#define	TOGGLEHIDE	'z'
-#define	DEL		'D'
+#define MOVE		'm'
+#define	OPENWITH	'o'
+#define	MKDIR		'M'
+#define EDIT		'e'
 #define	SHELLCMD	'$'
-#define	TOGGLENUMBER	'n'
-#define	QUIT		'q'
 #define	EXECSHELL	's'
-#define	SELECT		' '
+#define	TOGGLENUMBER	'n'
+#define	TOGGLEHIDE	'z'
+#define	QUIT		'q'
 
 /* theme */
 

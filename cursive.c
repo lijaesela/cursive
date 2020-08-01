@@ -30,6 +30,7 @@ int dirnum;
 char cutbuffer[4096][1024];
 int cutnumber = 0;
 char cutdisp[4096][128];
+char movecmdbuffer[4096];
 
 // storing prompt input
 char promptbuffer[256];
@@ -130,6 +131,10 @@ int mychangedir(const char *relativedir)
 	getcwd(cwd, sizeof(cwd));
 	chdir(strcat(strcat(cwd, "/"), relativedir));
 	return 0;
+}
+void mymv(void)
+{
+	return;
 }
 int myselectfile(const char *myfile)
 {
@@ -495,6 +500,21 @@ int main( int argc, char *argv[] )
 			// open file in $EDITOR
 			case EDIT:
 				myopenwith(getenv("EDITOR"), dirdir[myline]);
+				dirupdate = true;
+				break;
+
+			// move files by passing an mv command to the system
+			case MOVE:
+				strcpy(movecmdbuffer, "mv ");
+				for ( i=0; i<cutnumber; i++ )
+				{
+					strcat(movecmdbuffer, cutbuffer[i]);
+					strcat(movecmdbuffer, " ");
+				}
+				strcat(movecmdbuffer, "./");
+				system(movecmdbuffer);
+				cutnumber = 0;
+
 				dirupdate = true;
 				break;
 
