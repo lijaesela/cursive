@@ -15,7 +15,7 @@
 
 /* variables */
 
-// ncurses basics: window dimensions and "ch" for input
+// window dimensions and "ch" for input
 int maxrow, maxcol, ch;
 
 // position of user
@@ -29,8 +29,6 @@ int dirnum;
 // storing selected files
 char cutbuffer[4096][1024];
 int cutnumber = 0;
-
-// selected files UI
 char cutdisp[4096][128];
 
 // storing prompt input
@@ -41,6 +39,10 @@ struct stat sb;
 
 /* functions */
 
+void mymove(int steps)
+{
+	myline = myline + steps;
+}
 int calcdigits(int number)
 {
 	// I copied this function from a forum lmao but it basically returns the number of digits of a base 10 number
@@ -53,20 +55,6 @@ int calcdigits(int number)
 	} while (number);
 
 	return digits;
-}
-char myconfirm(const char *prompt)
-{
-	// move to bottom left
-	move(maxrow,0);
-
-	// clear anything on that line
-	clrtoeol();
-
-	// print prompt
-	printw(prompt);
-
-	// set the global "ch" variable to get input
-	ch = getch();
 }
 int myinit(void)
 {
@@ -84,7 +72,21 @@ int myinit(void)
 
 	return 0;
 }
-int myopenwith(const char *app, const char *file, ...)
+char myconfirm(const char *prompt)
+{
+	// move to bottom left
+	move(maxrow,0);
+
+	// clear anything on that line
+	clrtoeol();
+
+	// print prompt
+	printw(prompt);
+
+	// set the global "ch" variable to get input
+	ch = getch();
+}
+int myopenwith(const char *app, const char *file)
 {
 	char openbuff[128];
 
@@ -135,15 +137,25 @@ int mychangedir(const char *relativedir)
 }
 int myselectfile(const char *myfile)
 {
+	// get cwd
 	char cwd[1024];
 	getcwd(cwd, sizeof(cwd));
+
+	// get the absolute file path
+	// concatenate CWD and filename together
 	strcpy(cutbuffer[cutnumber], strcat(strcat(cwd,"/"),myfile) );
+
+	// get the name alone as well, for UI purposes
 	strcpy(cutdisp[cutnumber], myfile);
+
+	// count the amount of selected items
 	cutnumber++;
 }
 void myread(const char *direc)
 {
+	// start counting files at 0
 	dirnum = 0;
+
 	// code for reading the directory entries
 	struct dirent *de;
 	DIR *dr = opendir(direc);
@@ -154,7 +166,7 @@ void myread(const char *direc)
 		{
 			// copy all of the dirent stuff into my own var
 			strcpy(dirdir[dirnum], de->d_name);
-			// count the directory items there are
+			// count the directory items
 			dirnum++;
 		}
 	}
@@ -296,10 +308,10 @@ int main( int argc, char *argv[] )
 			myread(".");
 
 		// get out of blank space if entering a smaller directory
-		if (myline > dirnum)
-			myline = dirnum;
 		if (myline < 0)
 			myline = 0;
+		else if (myline > dirnum)
+			myline = dirnum;
 
 		// draw the UI
 		mydraw(maxcol);
@@ -312,54 +324,18 @@ int main( int argc, char *argv[] )
 		switch (ch)
 		{
 			case DOWN:
-				// handle going out of bounds
-				if ( myline == dirnum )
-				{
-					// loop if configured to do so
-					if ( yourloop == false )
-						break;
-					else
-						myline = 0;
-				}
-				else
-					myline++;
+				myline++;
 				break;
 			case UP:
-				// handle going out of bounds
-				if ( myline == 0 )
-				{
-					// loop if configured to do so
-					if ( yourloop == false )
-						break;
-					else
-						myline = dirnum;
-				}
-				else
-					myline--;
+				myline--;
 				break;
 			// same as down, but more epic
 			case PGDOWN:
-				if ( myline == dirnum )
-				{
-					if ( yourloop == false )
-						break;
-					else
-						myline = 0;
-				}
-				else
-					myline = myline+(maxrow/2);
+				myline = myline+(maxrow/2);
 				break;
 			// same as up, but more epic
 			case PGUP:
-				if ( myline == 0 )
-				{
-					if ( yourloop == false )
-						break;
-					else
-						myline = dirnum;
-				}
-				else
-					myline = myline-(maxrow/2);
+				myline = myline-(maxrow/2);
 				break;
 			// open file / cd to directory, ranger style
 			case OPEN:

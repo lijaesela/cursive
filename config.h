@@ -1,8 +1,5 @@
 /* functional stuff */
 
-// loop back when hitting the top or bottom of a directory
-const bool yourloop = true;
-
 // go to the first item upon entering a directory
 const bool yourzero = false;
 
