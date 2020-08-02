@@ -1,5 +1,8 @@
 /* functional stuff */
 
+// temp file for cursive_cd
+const char *yourtmp = "/tmp/cursive_cd";
+
 // move down after selecting a file
 const bool yourmoveselect = true;
 

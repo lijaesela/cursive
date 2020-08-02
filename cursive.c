@@ -142,7 +142,7 @@ void writetmp(void)
 	getcwd(cwd, sizeof(cwd));
 
 	// write CWD to /tmp file for CD script
-	fp = fopen("/tmp/cursive_cd", "w+");
+	fp = fopen(yourtmp, "w+");
 	fprintf(fp, "%s", cwd);
 
 	return;
