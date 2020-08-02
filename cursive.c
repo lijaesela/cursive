@@ -353,12 +353,14 @@ int main( int argc, char *argv[] )
 		/* set environment variables for scripting */
 
 		// "$f", the environment variable for the file at the cursor
-		setenv("f", dirdir[myline], 1);
+		strcpy(promptbuffer, "./");
+		strcat(promptbuffer, dirdir[myline]);
+		setenv("f", promptbuffer, 1);
 
 		// "$fx", the environment variable for selected files
 		if ( cutnumber == 0 ) {
 			// "$fx" will act as "$f" if there is no selection
-			setenv("fx", dirdir[myline], 1);
+			setenv("fx", promptbuffer, 1);
 		} else {
 			// use "movecmdbuffer" to save space
 			// clear the string
