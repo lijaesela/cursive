@@ -81,9 +81,10 @@ void myconfirm(const char *prompt)
 	// set the global "ch" variable to get input
 	ch = getch();
 }
-void myopenwith(const char *app, const char *file)
+int myopenwith(const char *app, const char *file)
 {
 	char openbuff[128];
+	int success;
 
 	// make a nice shell command with the sprintf function that I criminally underuse
 	sprintf(openbuff, "%s %s", app, file);
@@ -92,10 +93,82 @@ void myopenwith(const char *app, const char *file)
 	endwin();
 
 	// run the command
-	system(openbuff);
+	success = system(openbuff);
 
 	// start ncurses mode again
 	myinit();
+
+	return success;
+}
+int mydelete(const char *file, int confirm)
+{
+	// return success/failiure
+	int success, i;
+
+	// confirmation
+	if ( confirm == 1 )
+		myconfirm("delete file at cursor? (y,*)");
+	else
+		ch = 'y';
+
+	if ( ch == 'y' )
+	{
+		// get the type of file so it can be removed accordingly
+		stat(dirdir[myline], &sb);
+		switch (sb.st_mode & S_IFMT)
+		{
+			// remove directories with "rm" shell command
+			case S_IFDIR:
+				success = myopenwith("rm -rI", dirdir[myline]);
+				break;
+			// remove regular files
+			case S_IFREG:
+				success = remove(dirdir[myline]);
+				break;
+			// safe error for what I havent implemented yet
+			default:
+				success = -1;
+				break;
+		}
+	}
+	return success;
+}
+int multidelete(int confirm)
+{
+	int i;
+	int multisuccess = 0;
+	
+	// deleting multiple files
+	if ( confirm == 1 )
+		myconfirm("delete selected file(s)? (y,*)");
+	else
+		ch = 'y';
+
+	if ( ch == 'y' )
+	{
+		for ( i=0; i<cutnumber; i++ )
+		{
+			stat(cutbuffer[i], &sb);
+			switch (sb.st_mode & S_IFMT)
+			{
+				case S_IFDIR:
+					if ( myopenwith("rm -rI", cutbuffer[i]) != 0 )
+						multisuccess++;
+					break;
+				case S_IFREG:
+					if ( remove(cutbuffer[i]) != 0 )
+						multisuccess++;
+					break;
+				default:
+					multisuccess++;
+					break;
+			}
+		}
+		// set "cutnumber" to indicate that there is no longer a selection
+		cutnumber = 0;
+	}
+
+	return multisuccess;
 }
 const char * myprompt(const char *ps1, int length)
 {
@@ -316,6 +389,7 @@ int main( int argc, char *argv[] )
 {
 	// le increment has arrived
 	int i;
+	int success;
 
 	// exit if evoked incorrectly
 	if ( argc > 2 )
@@ -405,7 +479,12 @@ int main( int argc, char *argv[] )
 				{
 					// cd if direcrory
 					case S_IFDIR:
-						mydescend(dirdir[myline]);
+						success = mydescend(dirdir[myline]);
+						if ( success != 0 )
+						{
+							myconfirm("could not enter directory. (any key)");
+							break;
+						}
 						if ( yourzero == true )
 							myline = 0;
 						break;
@@ -454,54 +533,13 @@ int main( int argc, char *argv[] )
 
 			// deleting things
 			case DEL:
-				// check if there is a selection
+				// check for selection
 				if ( cutnumber == 0 ) {
-					// confirmation
-					myconfirm("delete file at cursor? (y,*)");
-					if ( ch == 'y' )
-					{
-						// get the type of file so it can be removed accordingly
-						stat(dirdir[myline], &sb);
-						switch (sb.st_mode & S_IFMT)
-						{
-							// remove directories with "rm" shell command
-							case S_IFDIR:
-								myopenwith("rm -rI", dirdir[myline]);
-								break;
-							// remove regular files
-							case S_IFREG:
-								remove(dirdir[myline]);
-								break;
-							// safe error for what I havent implemented yet
-							default:
-								myconfirm("can't delete this type (any key)");
-								break;
-						}
-					}
+					if ( mydelete(dirdir[myline], 1) != 0 )
+						myconfirm("could not delete file. (any key)");
 				} else {
-					// basically the same code as above but it runs in a for loop
-					myconfirm("delete selected file(s)? (y,*)");
-					if ( ch == 'y' )
-					{
-						for ( i=0; i<cutnumber; i++ )
-						{
-							stat(cutbuffer[i], &sb);
-							switch (sb.st_mode & S_IFMT)
-							{
-								case S_IFDIR:
-									myopenwith("rm -rI", cutbuffer[i]);
-									break;
-								case S_IFREG:
-									remove(cutbuffer[i]);
-									break;
-								default:
-									myconfirm("can't delete this type (any key)");
-									break;
-							}
-						}
-					}
-					// set "cutnumber" to indicate that there is no longer a selection
-					cutnumber = 0;
+					if ( multidelete(1) != 0 )
+						myconfirm("could not delete one or more files. (any key)");
 				}
 				dirupdate = true;
 				break;

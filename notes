@@ -1,8 +1,8 @@
 >> urgent <<
-make a shell function for using cursive to cd
 use an array of integers to ensure that files can't be selected twice
 use some variable wizardry to avoid repeating calculations in the draw function
 use return value of chdir to notify when cd fails
 >> maybe <<
 find out how to run commands and show the output at the bottom, like with "%" in lf
 >> done <<
+make a shell function for using cursive to cd

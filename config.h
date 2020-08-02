@@ -50,7 +50,7 @@ const char *yourfs = " ";
 /* theme */
 
 // ncurses attributes for certain kinds of files
-// examples: A_BOLD, A_DIM, A_STANDOUT, A_NORMAL
+// examples: A_BOLD, A_DIM, A_STANDOUT, A_NORMAL (for none)
 #define DIRTHEME	A_BOLD
 #define CURSORTHEME	A_BOLD
 #define NUMBERTHEME	A_DIM
