@@ -479,8 +479,8 @@ int main( int argc, char *argv[] )
 				{
 					// cd if direcrory
 					case S_IFDIR:
-						success = mydescend(dirdir[myline]);
-						if ( success != 0 )
+						// handle error
+						if ( mydescend(dirdir[myline]) != 0 )
 						{
 							myconfirm("could not enter directory. (any key)");
 							break;
@@ -498,7 +498,8 @@ int main( int argc, char *argv[] )
 
 			// go up a directory
 			case BACK:
-				chdir("./..");
+				if ( chdir("./..") != 0 )
+					myconfirm("could not ascend to parent directory. (any key)");
 				// go to the first item if configured to do so
 				if ( yourzero == true )
 					myline = 0;
@@ -510,13 +511,15 @@ int main( int argc, char *argv[] )
 				// put string returned from prompt in a buffer
 				strcpy(promptbuffer, myprompt("mkdir: ", 7));
 				// do the thing
-				mkdir(promptbuffer, 0777);
+				if ( mkdir(promptbuffer, 0777) != 0 )
+					myconfirm("could not create directory. (any key)");
 				dirupdate = true;
 				break;
 
 			// rename file at cursor
 			case RENAME:
-				rename(dirdir[myline], myprompt("rename: ", 8));
+				if ( rename(dirdir[myline], myprompt("rename: ", 8)) != 0 )
+					myconfirm("could not rename. (any key)");
 				dirupdate = true;
 				break;
 
@@ -527,7 +530,8 @@ int main( int argc, char *argv[] )
 				// concatenate filename with string returned from prompt
 				strcat(promptbuffer, myprompt("rename (append): ", 17));
 				// change the old filename to what we now have in the buffer
-				rename(dirdir[myline], promptbuffer);
+				if ( rename(dirdir[myline], promptbuffer) != 0 )
+					myconfirm("could not rename. (any key)");
 				dirupdate = true;
 				break;
 
@@ -570,12 +574,12 @@ int main( int argc, char *argv[] )
 
 					cutnumber = 0;
 				}
-
 				// end ncurses and run
 				endwin();
-				system(promptbuffer);
+				success = system(promptbuffer);
 				myinit();
-
+				if ( success != 0 )
+					myconfirm("could not open file(s). (any key)");
 				dirupdate = true;
 				break;
 
@@ -591,19 +595,20 @@ int main( int argc, char *argv[] )
 			// run a single shell command
 			case SHELLCMD:
 				strcpy(promptbuffer,myprompt("$ ",2));
-
 				// end ncurses and run
 				endwin();
-				system(promptbuffer);
+				success = system(promptbuffer);
 				myinit();
-
+				if ( success != 0 )
+					myconfirm("could not run command. (any key)");
 				dirupdate = true;
 				break;
 
 			// start interactive shell
 			case EXECSHELL:
 				endwin();
-				system(getenv("SHELL"));
+				if ( system(getenv("SHELL")) != 0 )
+					myconfirm("could not start shell. is $SHELL set? (any key)");
 				myinit();
 				dirupdate = true;
 				break;
@@ -611,9 +616,11 @@ int main( int argc, char *argv[] )
 			// open file(s) in $EDITOR
 			case EDIT:
 				if ( cutnumber == 0 )
-					myopenwith(getenv("EDITOR"), dirdir[myline]);
+					success = myopenwith(getenv("EDITOR"), dirdir[myline]);
 				else
-					myopenwith(getenv("EDITOR"), getenv("fx"));
+					success = myopenwith(getenv("EDITOR"), getenv("fx"));
+				if ( success != 0 )
+					myconfirm("could not edit file(s). is $EDITOR set? (any key)");
 				dirupdate = true;
 				break;
 
@@ -634,7 +641,8 @@ int main( int argc, char *argv[] )
 					strcat(movecmdbuffer, " ");
 				}
 				strcat(movecmdbuffer, "./");
-				system(movecmdbuffer);
+				if ( system(movecmdbuffer) != 0 )
+					myconfirm("could not move file(s). (ny key)");
 				cutnumber = 0;
 
 				dirupdate = true;
@@ -649,9 +657,11 @@ int main( int argc, char *argv[] )
 			case QUIT:
 				// call writetmp in case a cd needs to be done
 				writetmp();
-
 				// end ncurses and return main
 				endwin();
+				// output selected files on exit
+				if ( cutnumber != 0 )
+					printf("%s\n", getenv("fx"));
 				return 0;
 		}
 	}
