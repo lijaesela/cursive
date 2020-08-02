@@ -499,7 +499,10 @@ int main( int argc, char *argv[] )
 			// go up a directory
 			case BACK:
 				if ( chdir("./..") != 0 )
+				{
 					myconfirm("could not ascend to parent directory. (any key)");
+					break;
+				}
 				// go to the first item if configured to do so
 				if ( yourzero == true )
 					myline = 0;
@@ -512,14 +515,20 @@ int main( int argc, char *argv[] )
 				strcpy(promptbuffer, myprompt("mkdir: ", 7));
 				// do the thing
 				if ( mkdir(promptbuffer, 0777) != 0 )
+				{
 					myconfirm("could not create directory. (any key)");
+					break;
+				}
 				dirupdate = true;
 				break;
 
 			// rename file at cursor
 			case RENAME:
 				if ( rename(dirdir[myline], myprompt("rename: ", 8)) != 0 )
+				{
 					myconfirm("could not rename. (any key)");
+					break;
+				}
 				dirupdate = true;
 				break;
 
@@ -531,7 +540,10 @@ int main( int argc, char *argv[] )
 				strcat(promptbuffer, myprompt("rename (append): ", 17));
 				// change the old filename to what we now have in the buffer
 				if ( rename(dirdir[myline], promptbuffer) != 0 )
+				{
 					myconfirm("could not rename. (any key)");
+					break;
+				}
 				dirupdate = true;
 				break;
 
@@ -540,10 +552,16 @@ int main( int argc, char *argv[] )
 				// check for selection
 				if ( cutnumber == 0 ) {
 					if ( mydelete(dirdir[myline], 1) != 0 )
+					{
 						myconfirm("could not delete file. (any key)");
+						break;
+					}
 				} else {
 					if ( multidelete(1) != 0 )
+					{
 						myconfirm("could not delete one or more files. (any key)");
+						break;
+					}
 				}
 				dirupdate = true;
 				break;
@@ -579,7 +597,10 @@ int main( int argc, char *argv[] )
 				success = system(promptbuffer);
 				myinit();
 				if ( success != 0 )
+				{
 					myconfirm("could not open file(s). (any key)");
+					break;
+				}
 				dirupdate = true;
 				break;
 
@@ -600,16 +621,23 @@ int main( int argc, char *argv[] )
 				success = system(promptbuffer);
 				myinit();
 				if ( success != 0 )
+				{
 					myconfirm("could not run command. (any key)");
+					break;
+				}
 				dirupdate = true;
 				break;
 
 			// start interactive shell
 			case EXECSHELL:
 				endwin();
-				if ( system(getenv("SHELL")) != 0 )
-					myconfirm("could not start shell. is $SHELL set? (any key)");
+				success = system(getenv("SHELL")) 
 				myinit();
+				if ( success != 0 )
+				{
+					myconfirm("could not start shell. is $SHELL set? (any key)");
+					break;
+				}
 				dirupdate = true;
 				break;
 
@@ -620,7 +648,10 @@ int main( int argc, char *argv[] )
 				else
 					success = myopenwith(getenv("EDITOR"), getenv("fx"));
 				if ( success != 0 )
+				{
 					myconfirm("could not edit file(s). is $EDITOR set? (any key)");
+					break;
+				}
 				dirupdate = true;
 				break;
 
@@ -642,7 +673,10 @@ int main( int argc, char *argv[] )
 				}
 				strcat(movecmdbuffer, "./");
 				if ( system(movecmdbuffer) != 0 )
+				{
 					myconfirm("could not move file(s). (ny key)");
+					break;
+				}
 				cutnumber = 0;
 
 				dirupdate = true;
