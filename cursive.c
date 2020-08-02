@@ -53,7 +53,7 @@ int calcdigits(int number)
 
 	return digits;
 }
-int myinit(void)
+void myinit(void)
 {
 	// start curses mode
 	initscr();
@@ -66,10 +66,8 @@ int myinit(void)
 
 	// hide terminal cursor
 	curs_set(0);
-
-	return 0;
 }
-char myconfirm(const char *prompt)
+void myconfirm(const char *prompt)
 {
 	// move to bottom left
 	move(maxrow,0);
@@ -83,7 +81,7 @@ char myconfirm(const char *prompt)
 	// set the global "ch" variable to get input
 	ch = getch();
 }
-int myopenwith(const char *app, const char *file)
+void myopenwith(const char *app, const char *file)
 {
 	char openbuff[128];
 
@@ -98,8 +96,6 @@ int myopenwith(const char *app, const char *file)
 
 	// start ncurses mode again
 	myinit();
-
-	return 0;
 }
 const char * myprompt(const char *ps1, int length)
 {
@@ -127,10 +123,11 @@ const char * myprompt(const char *ps1, int length)
 }
 int mydescend(const char *relativedir)
 {
+	int success;
 	char cwd[1024];
 	getcwd(cwd, sizeof(cwd));
-	chdir(strcat(strcat(cwd, "/"), relativedir));
-	return 0;
+	success = chdir(strcat(strcat(cwd, "/"), relativedir));
+	return success;
 }
 void writetmp(void)
 {
@@ -147,7 +144,7 @@ void writetmp(void)
 
 	return;
 }
-int myselectfile(const char *myfile)
+void myselectfile(const char *myfile)
 {
 	// get cwd
 	char cwd[1024];
@@ -185,7 +182,7 @@ void myread(const char *direc)
 	// decrement by one, as the loop goes one over
 	dirnum--; 
 }
-int mydraw(int d_w)
+void mydraw(int d_w)
 {
 	/*
 	 * cursive draws files relatively to the cursor.
@@ -210,7 +207,7 @@ int mydraw(int d_w)
 	if ( dirnum < 0 )
 	{
 		printw("[empty]");
-		return 0;
+		return;
 	}
 
 	// move to the right place to start the for loop
