@@ -1,5 +1,4 @@
 /* headers */
-
 #include<stdlib.h>
 #include<stdio.h>
 #include<dirent.h>
@@ -10,7 +9,6 @@
 #include<sys/stat.h>
 
 /* include the config */
-
 #include"config.h"
 
 /* variables */
@@ -609,6 +607,7 @@ int main( int argc, char *argv[] )
 				yourhidden = !yourhidden;
 				dirupdate = true;
 				break;
+			// toggle line numbers
 			case TOGGLENUMBER:
 				yournumbers = !yournumbers;
 				break;
@@ -631,7 +630,7 @@ int main( int argc, char *argv[] )
 			// start interactive shell
 			case EXECSHELL:
 				endwin();
-				success = system(getenv("SHELL")) 
+				success = system(getenv("SHELL"));
 				myinit();
 				if ( success != 0 )
 				{
