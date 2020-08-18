@@ -21,6 +21,16 @@ to install (root privileges needed):
 ```shell
 make install
 ```
+It is easily possible to install without root privileges by simply editing the variables in the makefile.
+```makefile
+INSTALLDIR = /usr/local/bin
+MANDIR = /usr/local/share/man
+```
+This configuration will not require root privileges.
+```makefile
+INSTALLDIR = /home/jimbo/.local/bin
+MANDIR = /home/jimbo/local/share/man
+```
 
 ### Documentation
 Man page :3  
