@@ -2,8 +2,6 @@
 use an array of integers to ensure that files can't be selected twice  
 use some variable wizardry to avoid repeating calculations in the draw function  
 actually display user info rather than a placeholder (or just remove it)  
-use return value of chdir to notify when cd fails  
-make actions "break;" on error  
 
 # maybe/future
 find out how to run commands and show the output at the bottom, like with "%" in lf  
