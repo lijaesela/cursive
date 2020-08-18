@@ -4,7 +4,7 @@ MANDIR = /usr/local/share/man
 make: cursive.c config.h
 	gcc -o cursive cursive.c `pkg-config --cflags --libs ncurses`
 
-install: cursive
+install: cursive cursive.1
 	mkdir -p ${INSTALLDIR}
 	cp -f cursive ${INSTALLDIR}/cursive
 	chmod 755 ${INSTALLDIR}/cursive
