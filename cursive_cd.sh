@@ -5,5 +5,9 @@ cursive_cd ()
 {
 	$cursive_tmp="/tmp/cursive_cd"
 	cursive
-	[ -f $cursive_tmp ] && cd `cat $cursive_tmp` || echo "cursive tmp file not found, cannot cd."
+	if [ -f $cursive_tmp ]; then
+		cd `cat $cursive_tmp` || echo "cursive_cd error: could not change directory"
+	else
+		echo "cursive_cd error: tmp file not found"
+	fi
 }
