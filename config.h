@@ -1,13 +1,19 @@
 /* functional stuff */
 
+/*
+ * some options are configured by using #define.
+ * to turn them off, change the definition to a comment like so:
+ * #define MOVESELECT //myline++
+ */
+
 // temp file for cursive_cd
 const char *yourtmp = "/tmp/cursive_cd";
 
 // move down after selecting a file
-const bool yourmoveselect = true;
+#define	MOVESELECT	myline++
 
-// go to the first item upon entering a directory
-const bool yourzero = true;
+// go to item 0 upon entering a directory
+#define	STARTZERO	myline=0
 
 // file opener
 const char *youropener = "xdg-open";
@@ -18,7 +24,7 @@ bool yourhidden = true;
 // print numbers at startup
 bool yournumbers = true;
 
-// field separator for "$fx", an environment variable for selected files
+// field separator for "$fx", a shell variable for selected files
 const char *yourfs = " ";
 
 /* vim keys */
@@ -32,20 +38,20 @@ const char *yourfs = " ";
 #define	BACK		'h'
 
 // actions
-#define	SELECT		' '
-#define	DEL		'D'
-#define	RENAME		'r'
-#define	APPEND		'a'
-#define MOVE		'm'
+#define	SELECT	' '
+#define	DEL	'D'
+#define	RENAME	'r'
+#define	APPEND	'a'
+#define MOVE	'm'
 #define	OPENWITH	'o'
-#define	MKDIR		'M'
-#define EDIT		'e'
+#define	MKDIR	'M'
+#define EDIT	'e'
 #define	SHELLCMD	'$'
 #define	EXECSHELL	's'
 #define	TOGGLENUMBER	'n'
 #define	TOGGLEHIDE	'z'
-#define	QUIT		'q'
-#define CLEAR		'c'
+#define	QUIT	'q'
+#define CLEAR	'c'
 
 /* theme */
 

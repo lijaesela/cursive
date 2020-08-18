@@ -483,8 +483,7 @@ int main( int argc, char *argv[] )
 							myconfirm("could not enter directory. (any key)");
 							break;
 						}
-						if ( yourzero == true )
-							myline = 0;
+						STARTZERO;
 						break;
 					// open with configured opener if anything else
 					default:
@@ -501,9 +500,8 @@ int main( int argc, char *argv[] )
 					myconfirm("could not ascend to parent directory. (any key)");
 					break;
 				}
-				// go to the first item if configured to do so
-				if ( yourzero == true )
-					myline = 0;
+				// go to item 0 if configured to do so
+				STARTZERO;
 				dirupdate = true;
 				break;
 
@@ -567,8 +565,8 @@ int main( int argc, char *argv[] )
 			// select files for batch actions
 			case SELECT:
 				myselectfile(dirdir[myline]);
-				if ( yourmoveselect == true )
-					myline++;
+				// move down like in ranger, if configured.
+				MOVESELECT;
 				break;
 
 			// clear selected files
