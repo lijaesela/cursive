@@ -1,8 +1,10 @@
 INSTALLDIR = /usr/local/bin
 MANDIR = /usr/local/share/man
+CC = tcc
+CFLAGS = -lcurses
 
 make: cursive.c config.h
-	gcc -o cursive cursive.c `pkg-config --cflags --libs ncurses`
+	${CC} ${CFLAGS} -o cursive cursive.c
 
 install: cursive cursive.1
 	mkdir -p ${INSTALLDIR}
