@@ -6,6 +6,10 @@ CFLAGS = -lcurses
 make: cursive.c config.h
 	${CC} ${CFLAGS} -o cursive cursive.c
 
+run: cursive.c config.h
+	${CC} ${CFLAGS} -o cursive cursive.c
+	./cursive
+
 install: cursive cursive.1
 	mkdir -p ${INSTALLDIR}
 	cp -f cursive ${INSTALLDIR}/cursive

@@ -25,7 +25,7 @@ const char *youropener = "xdg-open";
 bool yourhidden = true;
 
 // print numbers at startup
-bool yournumbers = true;
+bool yournumbers = false;
 
 // field separator for "$fx", a shell variable for selected files
 const char *yourfs = " ";
