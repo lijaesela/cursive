@@ -15,6 +15,9 @@ const char *yourtmp = "/tmp/cursive_cd";
 // go to item 0 upon entering a directory
 #define	STARTZERO	myline=0
 
+// print selected files to stdout on exit
+#define OUTPUTSELECTION	//if ( cutnumber != 0 ) printf("%s\n", getenv("fx"))
+
 // file opener
 const char *youropener = "xdg-open";
 
@@ -68,6 +71,3 @@ const char *yourchar = ">";
 // printed before all files, can be more than one character
 // although it should probably be as long as "yourchar"
 const char *youritemspace = " ";
-
-// separator for information on the right of the window
-const char *yoursep = "~~~~~~~~";

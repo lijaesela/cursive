@@ -352,20 +352,13 @@ void mydraw(int d_w)
 	// much calculation is needed to know where to start printing
 	
 	// stop displaying if list of selected files is too long
-	if ( cutnumber < maxrow-3 )
+	if ( cutnumber < maxrow-1 )
 	{
-		// separator
-		mvprintw(maxrow-4,maxcol-strlen(yoursep),"%s", yoursep);
-	
-		// "user@host"
-		mvprintw(maxrow-3,maxcol-11,"%s@%s", "place", "holder");
-		
-		// separator
-		mvprintw(maxrow-2,maxcol-strlen(yoursep),"%s", yoursep);
-		
-		// show a number of files and CWD in the bottom right corner
+		// show a number of files
 		mvprintw(maxrow-1,maxcol-calcdigits(dirnum)-calcdigits(myline)+1-3,
 		"[%d/%d]", myline, dirnum);
+		
+		// pwd
 		mvprintw(maxrow,maxcol-strlen(cwd)+1,
 		"%s", cwd);
 	}
@@ -691,8 +684,7 @@ int main( int argc, char *argv[] )
 				// end ncurses and return main
 				endwin();
 				// output selected files on exit
-				if ( cutnumber != 0 )
-					printf("%s\n", getenv("fx"));
+				OUTPUTSELECTION;
 				return 0;
 		}
 	}
