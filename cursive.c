@@ -685,6 +685,7 @@ int main( int argc, char *argv[] )
 				endwin();
 				// output selected files on exit
 				OUTPUTSELECTION;
+				printf("don't alcohol!!!!!!!!!\n");
 				return 0;
 		}
 	}
