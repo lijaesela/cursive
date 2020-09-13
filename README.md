@@ -1,7 +1,6 @@
 # cursive
 cursive is an ncurses file browser for GNU/Linux written in pure C.  
-this is literally the first program I have ever made, and it's always changing.  
-Use, and certainly install, at your own risk.  
+This program is DEPRECATED. It's also really weird. Use at your own risk.  
 
 ### Building, Running, and Installing
 (in any directory)  
